@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS GenAI LLM Training Architecture </title>
+    <title>AWS GenAI LLM Training Architecture - Multi-Deployment Templates</title>
     <link rel="stylesheet" href="style.css">
-    <script src="./index.min.js"></script>
+    <script src="./index.js"></script>
 
 </head>
 <body>
@@ -20,6 +20,23 @@
         <a href="https://test.pypi.org/project/aws-genai-architecture-viz/" target="_blank"><button class="github-button">View the Python Package Released</button></a>
         <span class="aws-badge">AWS CLOUD</span>
 
+    </div>
+
+    <div class="deployment-selector">
+        <h4>🏗️ Deployment Template</h4>
+        <select id="deploymentTemplate" onchange="changeDeploymentTemplate()">
+            <option value="standard">Standard Training Pipeline</option>
+            <option value="eks-kubernetes">EKS Kubernetes Cluster</option>
+            <option value="batch-hpc">AWS Batch HPC Training</option>
+            <option value="emr-spark">EMR Spark Distributed</option>
+            <option value="fargate-serverless">Fargate Serverless</option>
+            <option value="parallelcluster">AWS ParallelCluster</option>
+            <option value="hybrid-multicloud">Hybrid Multi-Cloud</option>
+            <option value="edge-federated">Edge Federated Learning</option>
+        </select>
+        <div class="template-info" id="templateInfo">
+            Comprehensive LLM training with SageMaker, EC2, and managed services
+        </div>
     </div>
 
     <div class="canvas-container" id="canvasContainer">
@@ -98,6 +115,23 @@
                     <button onclick="resetArchitecture()" class="danger">🔄 Reset</button>
                 </div>
             </div>
+
+            <div class="control-section">
+                <h4>Panel Management</h4>
+                <div class="control-group">
+                    <button onclick="resetAllPanels()" class="secondary">🔄 Reset Panels</button>
+<!--                    <button onclick="minimizeAllPanels()" class="secondary">🔽 Minimize All</button>-->
+                    <button onclick="showAllPanels()" class="secondary">👁️ Show All</button>
+                    <button onclick="togglePanelLock()" class="secondary" id="panelLockBtn">🔒 Lock Panels</button>
+                </div>
+                <div class="control-group">
+
+                    <button onclick="saveLayout()" class="secondary">💾 Save Layout</button>
+                    <button onclick="loadLayout()" class="secondary">📁 Load Layout</button>
+<!--                    <button onclick="showKeyboardShortcuts()" class="secondary">⌨️ Shortcuts</button>-->
+                </div>
+
+            </div>
         </div>
 
         <div class="metrics-panel" id="metricsPanel">
@@ -140,56 +174,53 @@
             </div>
         </div>
 
-        <div class="legend">
-            <h3>🏗️ Architecture Components</h3>
+        <!-- ADD THIS NEW DIV -->
+        <div class="architecture-details" id="architectureDetails">
+            <h3>Architecture Overview</h3>
+            <div id="architectureContent">
+                <!-- Dynamic architecture details based on template -->
+            </div>
+        </div>
 
-            <div class="legend-section">
-                <h4>Compute Services</h4>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: linear-gradient(45deg, #ff9500, #ff6b35);"></div>
-                    <span>EC2 Training Instances</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: linear-gradient(45deg, #00d4aa, #0080ff);"></div>
-                    <span>SageMaker Training Jobs</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: linear-gradient(45deg, #9966cc, #6b46c1);"></div>
-                    <span>Bedrock Foundation Models</span>
+        <!-- YOUR EXISTING .legend DIV (keep as is) -->
+<!--        <div class="legend">-->
+<!--            <h3>🏗️ Architecture Components</h3>-->
+<!--            <div id="legendContent">-->
+<!--                &lt;!&ndash; Dynamic legend content based on template &ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+        <!-- Live Console -->
+        <div class="live-console" id="liveConsole">
+            <div class="console-header">
+                <span>🖥️ Live System Console</span>
+                <div class="console-controls">
+                    <button class="console-btn" onclick="clearConsole()">Clear</button>
+                    <button class="console-btn" onclick="toggleConsole()">Hide</button>
                 </div>
             </div>
-
-            <div class="legend-section">
-                <h4>Data & Storage</h4>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: linear-gradient(45deg, #ff6b35, #ff4757);"></div>
-                    <span>S3 Data Lake</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: linear-gradient(45deg, #ffa502, #ff9500);"></div>
-                    <span>Lambda Functions</span>
-                </div>
-            </div>
-
-            <div class="legend-section">
-                <h4>Communication Types</h4>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: radial-gradient(circle, #00ff88, #00d4aa);"></div>
-                    <span>Data Transfer</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: radial-gradient(circle, #0080ff, #0040ff);"></div>
-                    <span>Model Sync</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: radial-gradient(circle, #ff9500, #ff6b35);"></div>
-                    <span>Control Signals</span>
+            <div class="console-logs" id="consoleLogs">
+                <div class="log-entry log-system">
+                    <span class="log-timestamp">[INIT]</span>
+                    <span>AWS GenAI Architecture Console initialized</span>
                 </div>
             </div>
         </div>
+
+        <!-- Cost Tracker -->
+        <div class="cost-tracker" id="costTracker">
+            <div class="cost-header">💰 Real-time Cost Tracker</div>
+            <div id="costBreakdown">
+                <!-- Dynamic cost breakdown -->
+            </div>
+        </div>
     </div>
+
+
 </div>
 
 
 </body>
 </html>
+

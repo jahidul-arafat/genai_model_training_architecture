@@ -26,6 +26,7 @@ body {
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
 }
 
 .title {
@@ -51,6 +52,41 @@ body {
     font-size: 0.7rem;
     font-weight: bold;
     margin-left: 10px;
+}
+
+.deployment-selector {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    z-index: 200;
+}
+
+.deployment-selector h4 {
+    color: #ff9500;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.deployment-selector select {
+    width: 250px;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 0.85rem;
+}
+
+.template-info {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: #a0a0a0;
+    line-height: 1.3;
 }
 
 .canvas-container {
@@ -165,7 +201,7 @@ canvas {
 
 .metrics-panel {
     position: absolute;
-    top: 100px;
+    top: 200px;
     left: 20px;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(20px);
@@ -175,7 +211,7 @@ canvas {
     font-family: 'Courier New', monospace;
     font-size: 0.8rem;
     min-width: 280px;
-    max-height: 75vh;
+    max-height: 65vh;
     overflow-y: auto;
 }
 
@@ -304,26 +340,11 @@ canvas {
 .service-bedrock { background: #9966cc; color: white; }
 .service-lambda { background: #ffa502; color: white; }
 .service-ecs { background: #0080ff; color: white; }
-
-.reliability-indicator {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    animation: pulse-reliability 2s infinite;
-}
-
-.reliability-high { background: #00ff88; }
-.reliability-medium { background: #ffa502; }
-.reliability-low { background: #ff4757; }
-
-@keyframes pulse-reliability {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.7; }
-    100% { transform: scale(1); opacity: 1; }
-}
+.service-eks { background: #326ce5; color: white; }
+.service-batch { background: #ff6b6b; color: white; }
+.service-fargate { background: #ff8a65; color: white; }
+.service-emr { background: #4caf50; color: white; }
+.service-parallelcluster { background: #9c27b0; color: white; }
 
 .training-progress {
     position: absolute;
@@ -397,4 +418,335 @@ canvas {
     border-radius: 5px;
     z-index: 999;
     border: 1px solid rgba(255, 149, 0, 0.5);
+}
+
+.deployment-badge {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background: linear-gradient(45deg, #00d4aa, #0080ff);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 150;
+}
+
+.architecture-details {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    max-width: 400px;
+    max-height: 60vh;
+    overflow-y: auto;
+    z-index: 150;
+}
+
+.architecture-details h3 {
+    color: #ff9500;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.architecture-details h3::before {
+    content: '🏗️';
+    margin-right: 8px;
+}
+
+.arch-section {
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.arch-section:last-child {
+    border-bottom: none;
+}
+
+.arch-section h4 {
+    color: #00d4aa;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.arch-section h4::before {
+    content: '▸';
+    margin-right: 6px;
+    color: #ff9500;
+}
+
+.component-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.component-list li {
+    font-size: 0.75rem;
+    color: #e0e0e0;
+    margin-bottom: 4px;
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.4;
+}
+
+.component-list li::before {
+    content: '•';
+    color: #ff9500;
+    position: absolute;
+    left: 0;
+}
+
+.workflow-step {
+    background: rgba(255, 149, 0, 0.1);
+    border-left: 3px solid #ff9500;
+    padding: 8px 12px;
+    margin: 8px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.75rem;
+    line-height: 1.3;
+}
+
+.benefits-list {
+    background: rgba(0, 212, 170, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px 0;
+}
+
+.benefits-list h5 {
+    color: #00d4aa;
+    font-size: 0.8rem;
+    margin: 0 0 6px 0;
+}
+
+.benefits-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.benefits-list li {
+    font-size: 0.7rem;
+    color: #b0b0b0;
+    margin-bottom: 3px;
+    padding-left: 10px;
+    position: relative;
+}
+
+.benefits-list li::before {
+    content: '✓';
+    color: #00d4aa;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.cost-estimate {
+    background: rgba(255, 107, 53, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    text-align: center;
+}
+
+.cost-estimate .cost-label {
+    font-size: 0.7rem;
+    color: #a0a0a0;
+    margin-bottom: 3px;
+}
+
+.cost-estimate .cost-value {
+    font-size: 0.85rem;
+    color: #ff6b35;
+    font-weight: bold;
+}
+
+.live-console {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    width: 380px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 180;
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+}
+
+.console-header {
+    color: #00ff88;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.console-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.console-btn {
+    background: rgba(0, 255, 136, 0.2);
+    border: 1px solid #00ff88;
+    color: #00ff88;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.console-btn:hover {
+    background: rgba(0, 255, 136, 0.4);
+}
+
+.console-logs {
+    max-height: 220px;
+    overflow-y: auto;
+    border-top: 1px solid rgba(0, 255, 136, 0.2);
+    padding-top: 8px;
+}
+
+.log-entry {
+    margin-bottom: 3px;
+    padding: 2px 0;
+    line-height: 1.3;
+    word-wrap: break-word;
+}
+
+.log-timestamp {
+    color: #888;
+    margin-right: 8px;
+}
+
+.log-info { color: #00d4aa; }
+.log-warning { color: #ffa502; }
+.log-error { color: #ff4757; }
+.log-success { color: #00ff88; }
+.log-data { color: #0080ff; }
+.log-system { color: #9966cc; }
+
+.cost-tracker {
+    position: absolute;
+    top: 420px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(20px);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    width: 280px;
+    z-index: 180;
+    font-family: 'Courier New', monospace;
+}
+
+.cost-header {
+    color: #ff6b35;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.cost-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.75rem;
+}
+
+.cost-label {
+    color: #b0b0b0;
+}
+
+.cost-value {
+    color: #ff6b35;
+    font-weight: bold;
+}
+
+.cost-total {
+    border-top: 1px solid rgba(255, 107, 53, 0.3);
+    padding-top: 8px;
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+.cost-savings {
+    color: #00ff88;
+}
+
+.draggable-panel {
+    cursor: move;
+    user-select: none;
+    transition: box-shadow 0.2s ease;
+}
+
+.draggable-panel:hover {
+    box-shadow: 0 8px 32px rgba(255, 149, 0, 0.3);
+}
+
+.draggable-panel.dragging {
+    z-index: 9999;
+    transform: rotate(2deg);
+    box-shadow: 0 12px 40px rgba(255, 149, 0, 0.5);
+}
+
+.draggable-panel .drag-handle {
+    cursor: move;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+}
+
+.draggable-panel .drag-handle::before {
+    content: '⋮⋮';
+    color: #ff9500;
+    margin-right: 8px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Global panel opacity - add this at the end of your CSS file */
+.deployment-selector,
+.controls,
+.metrics-panel,
+.legend,
+.architecture-details,
+.live-console,
+.cost-tracker,
+.training-progress,
+.deployment-badge {
+    opacity: 0.4;
+}
+
+/* Optional: Add hover effect to make panels more visible when needed */
+.deployment-selector:hover,
+.controls:hover,
+.metrics-panel:hover,
+.legend:hover,
+.architecture-details:hover,
+.live-console:hover,
+.cost-tracker:hover,
+.training-progress:hover,
+.deployment-badge:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
 }
