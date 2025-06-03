@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS GenAI LLM Training Architecture</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./index.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 class="title">🚀 AWS GenAI LLM Training Architecture</h1>
+        <span class="aws-badge">AWS CLOUD</span>
+        <p class="subtitle">Comprehensive ML training pipeline with distributed computing and reliability features</p>
+    </div>
+
+    <div class="canvas-container" id="canvasContainer">
+        <canvas id="canvas"></canvas>
+        <div class="floating-particles" id="particles"></div>
+        <div id="tooltip" class="tooltip" style="display: none;"></div>
+        <div id="draggingIndicator" class="dragging-indicator" style="display: none;"></div>
+
+        <div class="training-progress" id="trainingProgress">
+            <div style="font-size: 0.8rem; color: #ff9500;">Training Progress: <span id="progressText">0%</span></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="control-section">
+                <h4>Training Operations</h4>
+                <div class="control-group">
+                    <button onclick="startTraining()">🎯 Start Training</button>
+                    <button onclick="pauseTraining()" class="secondary">⏸️ Pause Training</button>
+                    <button onclick="stopTraining()" class="danger">⏹️ Stop Training</button>
+                </div>
+                <div class="control-group">
+                    <button onclick="triggerCheckpoint()">💾 Checkpoint</button>
+                    <button onclick="validateModel()" class="secondary">✅ Validate Model</button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h4>Data Pipeline</h4>
+                <div class="control-group">
+                    <button onclick="triggerDataIngestion()">📥 Ingest Data</button>
+                    <button onclick="triggerPreprocessing()">🔄 Preprocess</button>
+                    <button onclick="triggerDataValidation()" class="secondary">✓ Validate Data</button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h4>Compute Management</h4>
+                <div class="control-group">
+                    <label>Instance Type:</label>
+                    <select id="instanceType" onchange="updateInstanceType()">
+                        <option value="p4d.24xlarge">p4d.24xlarge (8x A100)</option>
+                        <option value="p3dn.24xlarge">p3dn.24xlarge (8x V100)</option>
+                        <option value="trn1.32xlarge">trn1.32xlarge (Trainium)</option>
+                        <option value="inf2.48xlarge">inf2.48xlarge (Inferentia)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <button onclick="scaleOut()">📈 Scale Out</button>
+                    <button onclick="scaleIn()" class="secondary">📉 Scale In</button>
+                    <button onclick="addSpotInstance()">💰 Add Spot</button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h4>Reliability & Monitoring</h4>
+                <div class="control-group">
+                    <button onclick="simulateFailure()" class="danger">⚠️ Simulate Failure</button>
+                    <button onclick="triggerFailover()" class="secondary">🔄 Failover</button>
+                    <button onclick="runHealthCheck()">❤️ Health Check</button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h4>System Controls</h4>
+                <div class="control-group">
+                    <label>Animation Speed: <span id="speedValue">1.0x</span></label>
+                    <input type="range" id="speedControl" min="0.1" max="3" step="0.1" value="1"
+                           onchange="updateSpeed(this.value)">
+                </div>
+                <div class="control-group">
+                    <button onclick="clearCommunications()" class="secondary">🧹 Clear Signals</button>
+                    <button onclick="togglePause()">⏸️ Pause</button>
+                    <button onclick="resetArchitecture()" class="danger">🔄 Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics-panel" id="metricsPanel">
+            <h3>🔍 System Metrics</h3>
+            <div class="metric-row">
+                <span class="metric-label">Training Instances:</span>
+                <span class="metric-value" id="trainingInstances">4</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">GPU Utilization:</span>
+                <span class="metric-value" id="gpuUtilization">78%</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Model Parameters:</span>
+                <span class="metric-value" id="modelParams">70B</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Training Loss:</span>
+                <span class="metric-value" id="trainingLoss">2.34</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Throughput:</span>
+                <span class="metric-value" id="throughput">1.2k tokens/sec</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Data Processed:</span>
+                <span class="metric-value" id="dataProcessed">2.3TB</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Network I/O:</span>
+                <span class="metric-value" id="networkIO">450 MB/s</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Reliability Score:</span>
+                <span class="metric-value" id="reliabilityScore">99.2%</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Cost/Hour:</span>
+                <span class="metric-value" id="costPerHour">$892</span>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>🏗️ Architecture Components</h3>
+
+            <div class="legend-section">
+                <h4>Compute Services</h4>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(45deg, #ff9500, #ff6b35);"></div>
+                    <span>EC2 Training Instances</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(45deg, #00d4aa, #0080ff);"></div>
+                    <span>SageMaker Training Jobs</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(45deg, #9966cc, #6b46c1);"></div>
+                    <span>Bedrock Foundation Models</span>
+                </div>
+            </div>
+
+            <div class="legend-section">
+                <h4>Data & Storage</h4>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(45deg, #ff6b35, #ff4757);"></div>
+                    <span>S3 Data Lake</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(45deg, #ffa502, #ff9500);"></div>
+                    <span>Lambda Functions</span>
+                </div>
+            </div>
+
+            <div class="legend-section">
+                <h4>Communication Types</h4>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: radial-gradient(circle, #00ff88, #00d4aa);"></div>
+                    <span>Data Transfer</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: radial-gradient(circle, #0080ff, #0040ff);"></div>
+                    <span>Model Sync</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: radial-gradient(circle, #ff9500, #ff6b35);"></div>
+                    <span>Control Signals</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
